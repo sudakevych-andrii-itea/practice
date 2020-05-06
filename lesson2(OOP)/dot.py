@@ -21,3 +21,12 @@ class Dot:
 
     def __neg__(self):
         return Dot(-self.x, -self.y, -self.z)
+
+
+if __name__ == '__main__':
+    dot1 = Dot(1, 2, 3)
+    dot2 = Dot(1, 2, 3)
+    print(dot1 + dot2)
+    print(dot1 - dot2)
+    print(dot1 * dot2)
+    print(dot1 / dot2)

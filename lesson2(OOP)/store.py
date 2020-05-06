@@ -16,3 +16,12 @@ class Store:
     @staticmethod
     def get_total_sold_items_count():
         return Store.total_sold_count_item
+
+
+if __name__ == '__main__':
+    store1 = Store('store1', 0)
+    store1.increase_sold_items_count(100)
+    print(store1.get_sold_items_count())
+    store2 = Store('store2', 200)
+    print(store2.get_sold_items_count())
+    print(Store.get_total_sold_items_count())
