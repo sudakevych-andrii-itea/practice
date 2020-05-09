@@ -13,3 +13,13 @@ class Queue:
     def pop(self):
         assert len(self.queue), 'Queue is empty'
         return self.queue.pop(0)
+
+
+if __name__ == '__main__':
+    queue = Queue(5)
+    queue.push(1)
+    queue.push(2)
+    queue.push(3)
+    print(queue)
+    queue.pop()
+    print(queue)
