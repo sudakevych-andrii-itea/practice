@@ -32,7 +32,7 @@ def download_image(index, link):
     print(f'thread-{index + 1} started with link {link} \n')
     image = requests.get(link)
     image_format = link[-3:len(link)]
-    open(f'img/python{index + 1}.{image_format}', 'wb').write(image.content)
+    open(f'./python{index + 1}.{image_format}', 'wb').write(image.content)
     print(f'thread-{index + 1} finished')
 
 
