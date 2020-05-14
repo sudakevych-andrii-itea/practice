@@ -4,17 +4,18 @@ from threading import Thread
 def thread_decorator(thread_name, is_daemon):
     def inner_thread_decorator(func):
         def wrapper(*args):
-            print(f'{thread_name} started')
             t = Thread(target=func, args=args, daemon=is_daemon)
+            t.setName(thread_name)
             t.start()
-            print(f'{thread_name} finished')
         return wrapper
     return inner_thread_decorator
 
 
-@thread_decorator('thread1', True)
+@thread_decorator('thread1', False)
 def some_func(name):
+    print(f'Thread started')
     print(f'Hello, {name}')
+    print(f'Thread finished')
 
 
 some_func('Andrii')

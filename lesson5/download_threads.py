@@ -1,5 +1,3 @@
-import time
-
 import requests
 from threading import Thread
 
@@ -16,26 +14,26 @@ links_list = [
     'https://media.proglib.io/wp-uploads/2019/04/Python.jpg',
 ]
 
-threads_list = []
-
 
 def thread_decorator(thread_name, is_daemon):
     def inner_thread_decorator(func):
-        def wrapper(*args):
-            print(f'{thread_name}{args[0] + 1} started')
-            t = Thread(target=func, args=args, daemon=is_daemon)
+        def wrapper(index, *args):
+            threads_list = []
+            t = Thread(target=func, args=(index, *args), daemon=is_daemon)
+            t.setName(f'{thread_name}-{index + 1}')
             threads_list.append(t)
             t.start()
-            print(f'{thread_name}{args[0] + 1} finished')
         return wrapper
     return inner_thread_decorator
 
 
-@thread_decorator(f'thread', False)
+@thread_decorator(f'image-thread', False)
 def download_image(index, link):
+    print(f'thread-{index + 1} started with link {link} \n')
     image = requests.get(link)
     image_format = link[-3:len(link)]
     open(f'img/python{index + 1}.{image_format}', 'wb').write(image.content)
+    print(f'thread-{index + 1} finished')
 
 
 for ind, item in enumerate(links_list):
