@@ -14,6 +14,9 @@ class CustomList:
     def __add__(self, other):
         return CustomList(*self.my_custom_list + other.my_custom_list)
 
+    def get_list(self):
+        return self.my_custom_list
+
     def append(self, value):
         self.my_custom_list = self.my_custom_list + [value]
 

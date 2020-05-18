@@ -13,6 +13,9 @@ class CustomDict:
     def __add__(self, other):
         return CustomDict(**self.my_custom_dict, **other.my_custom_dict)
 
+    def get_dict(self):
+        return self.my_custom_dict
+
     def get(self, key):
         if key in [*self.my_custom_dict]:
             return self.my_custom_dict[key]
