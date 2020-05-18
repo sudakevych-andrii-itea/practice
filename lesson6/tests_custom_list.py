@@ -29,7 +29,6 @@ class TestCustomList(unittest.TestCase):
                 'remove_el': 4,
                 'remove_res': [5, 3, 2, 1]
             }
-
         )
 
     def test_append(self):
