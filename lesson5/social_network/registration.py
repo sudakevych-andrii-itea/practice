@@ -1,14 +1,14 @@
 import re
 import datetime
+import shelve
 
 
 class Registration:
-    users = []
 
-    def __init__(self):
-        self._email = None
-        self._password = None
-        self._confirm_password = None
+    def __init__(self, email, password, confirm_password=None):
+        self._email = email
+        self._password = password
+        self._confirm_password = confirm_password
 
     @property
     def email(self):
@@ -43,9 +43,11 @@ class Registration:
                         self._email) is not None
 
     def _check_email_originality(self):
-        for user in self.__class__.users:
-            if user['email'] == self._email:
-                return False
+        with shelve.open('users') as users:
+            if len(users):
+                for user in users.values():
+                    if user['email'] == self._email:
+                        return False
         return True
 
     def _check_password_validation(self):
@@ -61,11 +63,16 @@ class Registration:
         if self._check_email_originality():
             if self._check_email_validation() and self._check_password_validation():
                 if self._check_password_confirmation():
-                    self.__class__.users.append({'id': len(self.__class__.users) + 1,
-                                                 'email': self.email,
-                                                 'password': self.password,
-                                                 'registration_date': datetime.datetime.now().strftime('%d-%m-%Y %H:%M'),
-                                                 'online': False})
+                    users_dict = {
+                        'email': self.email,
+                        'password': self.password,
+                        'registration_date': datetime.datetime.now().strftime('%d-%m-%Y %H:%M'),
+                        'online': False
+                    }
+                    with shelve.open('users') as users:
+                        users_dict.update(user_id=f'{len(users) + 1}')
+                        users[f'{len(users) + 1}'] = users_dict
+
                 else:
                     return 'Passwords mismatch'
             else:
