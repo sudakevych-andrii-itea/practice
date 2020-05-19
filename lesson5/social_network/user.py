@@ -4,8 +4,8 @@ import datetime
 class User:
     posts = []
 
-    def __init__(self, current_user=None):
-        self._current_user = current_user
+    def __init__(self):
+        self._current_user = None
 
     @property
     def current_user(self):
@@ -29,8 +29,8 @@ class User:
 
 
 class Admin(User):
-    def __init__(self, current_user):
-        super().__init__(current_user)
+    def __init__(self):
+        super().__init__()
 
     def get_users_posts_info(self, users):
         user_info = [{k: v for k, v in user.items() if k in ('id', 'registration_date')} for user in users]

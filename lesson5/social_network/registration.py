@@ -5,10 +5,10 @@ import datetime
 class Registration:
     users = []
 
-    def __init__(self, email, password, confirm_password=None):
-        self._email = email
-        self._password = password
-        self._confirm_password = confirm_password
+    def __init__(self):
+        self._email = None
+        self._password = None
+        self._confirm_password = None
 
     @property
     def email(self):

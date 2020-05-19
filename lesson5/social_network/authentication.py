@@ -2,8 +2,8 @@ from registration import Registration
 
 
 class Authentication(Registration):
-    def __init__(self, email, password):
-        super().__init__(email, password)
+    def __init__(self):
+        super().__init__()
 
     @staticmethod
     def _login_to_account(user):
