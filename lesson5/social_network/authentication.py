@@ -10,26 +10,16 @@ class Authentication(Registration):
     @staticmethod
     def _login_to_account(user):
         with shelve.open('users') as users:
-            users_dict = {
-                'user_id': users[user]['user_id'],
-                'email': users[user]['email'],
-                'password': users[user]['password'],
-                'registration_date': users[user]['registration_date'],
-                'online': True
-            }
-            users[user] = users_dict
+            user_dict = users[user]
+            user_dict.update(online=True)
+            users[user] = user_dict
 
     @staticmethod
     def leave_account(user):
         with shelve.open('users') as users:
-            users_dict = {
-                'user_id': users[user]['user_id'],
-                'email': users[user]['email'],
-                'password': users[user]['password'],
-                'registration_date': users[user]['registration_date'],
-                'online': False
-            }
-            users[user] = users_dict
+            user_dict = users[user]
+            user_dict.update(online=True)
+            users[user] = user_dict
 
     def _check_email_existence(self):
         with shelve.open('users') as users:
