@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block main %}
+<h1 style="text-transform: capitalize;">{{ category_name }}</h1>
+{% if products | length %}
+    <ul>
+        {% for product in products %}
+            <li>
+                <a href="{{ url_for('product', category_name=category_name, product_name=product.product_url) }}" class="product-name">{{ product.product_name }}</a>
+                <div class="price">Price: {{ product.price }}</div>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <div>There are no products in the category</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block main %}
+    <main>
+        <a href="{{ url_for('category', category_name=category_name) }}">Back to {{ category_name }}</a>
+        <div>Product name: {{ product.product_name }}</div>
+        <div>Price: {{ product.price }}</div>
+        <div>
+            {% if  product.in_sale %}
+                In sale
+            {% else %}
+                Out of sale
+            {% endif %}
+        </div>
+        <div>
+            {% if  product.in_stock %}
+                In stock
+            {% else %}
+                Out of stock
+            {% endif %}
+        </div>
+        <div>{{ product.description }}</div>
+    </main>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block main %}
+    <style>
+        .form-block {
+            margin-bottom: 40px;
+        }
+        .form-block div {
+            margin-bottom: 20px;
+        }
+    </style>
+    <div class="form-block">
+        <h2>Add category</h2>
+        <form class="add_category" action="{{ url_for('admin') }}" name="add-category" method="post">
+            <input type="hidden" name="add-category">
+            <div><input type="text" name="category_name" placeholder="Category name"></div>
+            <div><input type="submit" value="Add"></div>
+        </form>
+    </div>
+
+    <div class="form-block">
+        <h2>Add product</h2>
+        <form class="add_product" action="{{ url_for('admin') }}" name="add-product" method="post">
+            <input type="hidden" name="add-product">
+            <div><input type="text" name="product-name" placeholder="Product name" /></div>
+            <div><input type="text" name="price" placeholder="Price" /></div>
+            <div>
+                <div>
+                    <label for="in-sale">In sale</label>
+                    <input type="radio" id="in-sale" value="1" name="in-sale" />
+                </div>
+                <div>
+                    <label for="out-sale">Out of sale</label>
+                    <input type="radio" id="out-sale" value="0" name="in-sale" checked />
+                </div>
+            </div>
+            <div>
+            <div>
+                <label for="in-stock">In stock</label>
+                <input type="radio" id="in-stock" value="1" name="in-stock">
+            </div>
+            <div>
+                <label for="out-stock">Out of stock</label>
+                <input type="radio" id="out-stock" value="0" name="in-stock" checked />
+            </div>
+        </div>
+            <div>
+                <textarea name="description" cols="30" rows="10"></textarea>
+            </div>
+            <div>
+                <input type="text" name="product-url" placeholder="Product url">
+            </div>
+            <div>
+                <select name="category-id">
+                    <option selected disabled>Choose category</option>
+                    {% for category in categories %}
+                        <option value="{{ category.category_id }}">{{ category.category_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div><input type="submit" value="Add"></div>
+        </form>
+    </div>
+{% endblock %}
