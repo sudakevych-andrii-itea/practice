@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from sqlite_context_manager import SQLite
 from admin import Admin
 
@@ -18,15 +18,11 @@ def get_categories():
         return [dict(zip(model_structures['category'], values)) for values in cur.fetchall()]
 
 
-def get_category_id(category_name):
+def get_products(category_name):
     with SQLite('store.db') as cur:
-        cur.execute("SELECT category_id FROM category WHERE category_name = ?", (category_name,))
-        return cur.fetchone()
-
-
-def get_products(category_id):
-    with SQLite('store.db') as cur:
-        cur.execute("SELECT * FROM product WHERE category_id = ?", (category_id,))
+        cur.execute("SELECT * FROM product "
+                    "INNER JOIN category ON (product.category_id = category.category_id)"
+                    "WHERE category_name = ?", (category_name,))
         return [dict(zip(model_structures['product'], values)) for values in cur.fetchall()]
 
 
@@ -55,6 +51,7 @@ def admin():
                                       request.form.get('category-id'),
                                       request.form.get('description'),
                                       request.form.get('product-url'))
+        return redirect(url_for('admin'))
     return render_template('admin.html', categories=get_categories())
 
 
@@ -62,7 +59,7 @@ def admin():
 def category(category_name):
     return render_template('category.html',
                            category_name=category_name,
-                           products=get_products(*get_category_id(category_name)))
+                           products=get_products(category_name))
 
 
 @app.route('/<category_name>/<product_name>')
